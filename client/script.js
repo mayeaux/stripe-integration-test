@@ -58,35 +58,41 @@ var stripeElements = function(publicKey, setupIntent) {
   });
 };
 
-var getSetupIntent = function(publicKey) {
-  return fetch("/create-setup-intent", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(setupIntent) {
-      stripeElements(publicKey, setupIntent);
-    });
-};
+var publicKey = '';
+var clientSecret = '';
 
-var getPublicKey = function() {
-  return fetch("/public-key", {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(response) {
-      getSetupIntent(response.publicKey);
-    });
-};
+stripeElements(publicKey, clientSecret);
+
+//
+// var getSetupIntent = function(publicKey) {
+//   return fetch("/create-setup-intent", {
+//     method: "post",
+//     headers: {
+//       "Content-Type": "application/json"
+//     }
+//   })
+//     .then(function(response) {
+//       return response.json();
+//     })
+//     .then(function(setupIntent) {
+//       stripeElements(publicKey, setupIntent);
+//     });
+// };
+//
+// var getPublicKey = function() {
+//   return fetch("/public-key", {
+//     method: "get",
+//     headers: {
+//       "Content-Type": "application/json"
+//     }
+//   })
+//     .then(function(response) {
+//       return response.json();
+//     })
+//     .then(function(response) {
+//       getSetupIntent(response.publicKey);
+//     });
+// };
 
 // Show a spinner on payment submission
 var changeLoadingState = function(isLoading) {
@@ -104,6 +110,9 @@ var changeLoadingState = function(isLoading) {
 /* Shows a success / error message when the payment is complete */
 var orderComplete = function(stripe, clientSecret) {
   stripe.retrieveSetupIntent(clientSecret).then(function(result) {
+
+    console.log(result);
+
     var setupIntent = result.setupIntent;
     var setupIntentJson = JSON.stringify(setupIntent, null, 2);
 
@@ -118,4 +127,4 @@ var orderComplete = function(stripe, clientSecret) {
   });
 };
 
-getPublicKey();
+// getPublicKey();
