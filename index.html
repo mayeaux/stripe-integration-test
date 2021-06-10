@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="css/global.css" />
     <script src="https://js.stripe.com/v3/"></script>
     <script>
+      // public key of the stripe account
+      var publicKey = 'pk_test_NoL1JWL7i1ipfhVId5KfDZgo';
+
+      // client secret of the SetupIntent (don't share with anyone but customer)
+      var clientSecret = 'seti_1J06NBIrsVv9ySuhNe8kilMp_secret_JdN7X7QEudCP69ZpnL7njukN2ytXhlk';
+
+      // run after the dom is loaded
       window.addEventListener("DOMContentLoaded", function() {
         var stripeElements = function(publicKey, setupIntent) {
           var stripe = Stripe(publicKey);
@@ -71,9 +78,6 @@
                     });
           });
         };
-
-        var publicKey = 'pk_test_NoL1JWL7i1ipfhVId5KfDZgo';
-        var clientSecret = 'seti_1J06NBIrsVv9ySuhNe8kilMp_secret_JdN7X7QEudCP69ZpnL7njukN2ytXhlk';
 
         stripeElements(publicKey, clientSecret);
 
